@@ -20,18 +20,16 @@ impl ResourceFilter for PNGFilter {
 	fn matches(&self, path: &str) -> bool {
 		path.ends_with(".bundle")
 		&& (
-			!self.enabled
-			||
-			path.contains("textures")
-			&& (path.contains("uis") 
-				|| path.contains("mx-addressableasset-ui")
-			)
-			&& !(path.contains("mx-spine")
+			path.contains("textures") || path.contains("mx-addressableasset-ui")
+		)
+		&& (
+			self.enabled 
+			|| !(path.contains("mx-spine")
 				|| path.contains("mx-npcs")
 				|| path.contains("mx-obstacles")
 				|| path.contains("mx-cafe")
 				|| path.contains("mx-characters")
-			)
+				)
 		)
 	}
 }
