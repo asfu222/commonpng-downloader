@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-linux:
+    name: Build for Linux (x86_64)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-unknown-linux-gnu
+
+      - name: Cache Cargo dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-x86_64-unknown-linux-gnu-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build release binary
+        run: cargo build --release --target x86_64-unknown-linux-gnu
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: commonpng-downloader-linux-x86_64
+          path: target/x86_64-unknown-linux-gnu/release/commonpng-downloader
