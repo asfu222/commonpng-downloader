@@ -1,0 +1,12 @@
+[package]
+name = "commonpng-downloader"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+baad = { git = "https://github.com/asfu222/BA-AD-rs", version="2.7.5" }
+baad-core = { git = "https://github.com/RZinth/BA-AD-Core", version = "*" }
+reqwest = { version = "*", features = ["json"] }
+tokio = { version = "*", features = ["full"] }
+eyre = "*"
+clap = { version = "4.5.48", features = ["derive"] }
